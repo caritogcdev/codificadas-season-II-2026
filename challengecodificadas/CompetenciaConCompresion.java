@@ -153,10 +153,8 @@ public class CompetenciaConCompresion {
 
     Candidate best = null;
 
-    if (totalPixels <= 300000) {
-      byte[] compressedRaw = deflate(raw, level, false);
-      best = chooseBest(best, new Candidate(MODE_ZLIB_RAW, compressedRaw));
-    }
+    byte[] compressedRaw = deflate(raw, level, false);
+    best = chooseBest(best, new Candidate(MODE_ZLIB_RAW, compressedRaw));
 
     byte[] filtered = makePngFiltered(raw, n, m);
     byte[] compressedFiltered = deflate(filtered, level, true);
@@ -185,14 +183,14 @@ public class CompetenciaConCompresion {
 
   static int chooseLevel(int totalPixels) {
     if (totalPixels > 700000) {
-      return 2;
+      return 4;
     }
 
     if (totalPixels > 300000) {
-      return 3;
+      return 5;
     }
 
-    return 6;
+    return 7;
   }
 
   static Candidate chooseBest(Candidate best, Candidate current) {
@@ -709,8 +707,7 @@ public class CompetenciaConCompresion {
   static byte[] readCompressedBytes(
       FastScanner fs,
       int words,
-      int compressedLength
-  ) throws IOException {
+      int compressedLength) throws IOException {
 
     byte[] bytes = new byte[compressedLength];
 
